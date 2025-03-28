@@ -2,9 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.sendStatus(200);
+  res.send('Home Route');
 });
 
-module.exports = {
-  router
-};
+module.exports = { router };

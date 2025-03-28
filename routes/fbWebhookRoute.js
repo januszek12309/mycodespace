@@ -3,16 +3,17 @@ const router = express.Router();
 require('dotenv').config();
 const axios = require("axios").default;
 
-router.get('/', (req, res) => {
+router.get('/webhook', (req, res) => {
   let mode = req.query['hub.mode'];
   let token = req.query['hub.verify_token'];
   let challenge = req.query['hub.challenge'];
+
   if (mode && token) {
     if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
       console.log('WEBHOOK_VERIFIED');
-      res.status(200).send(challenge);
+      res.status(200).send(challenge);  // Verify the webhook
     } else {
-      res.sendStatus(403);
+      res.sendStatus(403);  // Forbidden if token doesn't match
     }
   }
 });

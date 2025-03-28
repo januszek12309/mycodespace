@@ -16,8 +16,9 @@ const homeRoute = require('./routes/homeRoute');
 const fbWebhookRoute = require('./routes/fbWebhookRoute');
 const sendMessageRoute = require('./routes/sendMessageRoute');
 
+// Usuwamy '/facebook', aby trasa webhooka była dostępna pod '/webhook'
+webApp.use('/webhook', fbWebhookRoute.router);
 webApp.use('/', homeRoute.router);
-webApp.use('/facebook', fbWebhookRoute.router);
 webApp.use('/sendMessage', sendMessageRoute.router);
 
 webApp.listen(PORT, () => {
