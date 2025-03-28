@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   let token = req.query['hub.verify_token'];
   let challenge = req.query['hub.challenge'];
   if (mode && token) {
-    if (mode === 'subscribe' && token === process.env.VERIFY_TOEKN) {
+    if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
       console.log('WEBHOOK_VERIFIED');
       res.status(200).send(challenge);
     } else {
@@ -35,14 +35,18 @@ const callSendMessage = async (url, senderId, query) => {
 router.post('/', async (req, res) => {
   try {
     let body = req.body;
+    if (!body.entry || !body.entry[0].messaging || !body.entry[0].messaging[0]) {
+      return res.status(400).send('Invalid payload');
+    }
     let senderId = body.entry[0].messaging[0].sender.id;
     let query = body.entry[0].messaging[0].message.text;
     const host = req.hostname;
     let requestUrl = `https://${host}/sendMessage`;
-    callSendMessage(requestUrl, senderId, query)
+    await callSendMessage(requestUrl, senderId, query);
     console.log(senderId, query);
   } catch (error) {
-    console.log(error);
+    console.error('Error in processing webhook:', error);
+    res.status(500).send('Internal server error');
   }
   res.status(200).send('OK');
 });
