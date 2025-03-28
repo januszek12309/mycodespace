@@ -21,6 +21,6 @@ webApp.use('/webhook', fbWebhookRoute.router);
 webApp.use('/', homeRoute.router);
 webApp.use('/sendMessage', sendMessageRoute.router);
 
-webApp.listen(PORT, () => {
-  console.log(`Server is up and running at ${PORT}`);
+webApp.listen(process.env.PORT || 5000, () => {
+  console.log(`Server is up and running at ${process.env.PORT || 5000}`);
 });
