@@ -7,20 +7,18 @@ const PORT = process.env.PORT || 5000;
 
 webApp.use(express.urlencoded({ extended: true }));
 webApp.use(express.json());
-webApp.use((req, res, next) => {
-  console.log(`Path ${req.path} with Method ${req.method}`);
-  next();
-});
 
+// Importujesz swoje trasy
 const homeRoute = require('./routes/homeRoute');
 const fbWebhookRoute = require('./routes/fbWebhookRoute');
 const sendMessageRoute = require('./routes/sendMessageRoute');
 
-// Usuwamy '/facebook', aby trasa webhooka była dostępna pod '/webhook'
-webApp.use('/webhook', fbWebhookRoute.router);
-webApp.use('/', homeRoute.router);
-webApp.use('/sendMessage', sendMessageRoute.router);
+// Ustawiasz trasy
+webApp.use('/webhook', fbWebhookRoute.router); // Endpoint do webhooka
+webApp.use('/', homeRoute.router);              // Strona główna
+webApp.use('/sendMessage', sendMessageRoute.router); // Endpoint do wysyłania wiadomości
 
-webApp.listen(process.env.PORT || 5000, () => {
-  console.log(`Server is up and running at ${process.env.PORT || 5000}`);
+// Uruchamiasz serwer
+webApp.listen(PORT, () => {
+  console.log(`Server is up and running at ${PORT}`);
 });
