@@ -6,22 +6,24 @@ require('dotenv').config();
 const axios = require("axios").default;
 
 // Endpoint weryfikacji (GET)
-router.get('/webhook', (req, res) => {
+router.get('/', (req, res) => {
   const mode = req.query['hub.mode'];
   const token = req.query['hub.verify_token'];
   const challenge = req.query['hub.challenge'];
+
+  console.log('Received GET request:', { mode, token, challenge });
 
   if (mode && token) {
     if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
       console.log('WEBHOOK_VERIFIED');
       res.status(200).send(challenge);  // Wysłanie challenge
     } else {
-      console.log('Invalid token');
+      console.log('Invalid token or mode');
       res.sendStatus(403);  // Forbidden, jeśli token nie pasuje
     }
   } else {
     console.log('Missing parameters');
-    res.sendStatus(400);  // Missing parameters
+    res.sendStatus(400);  // Brak wymaganych parametrów
   }
 });
 
