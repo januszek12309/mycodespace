@@ -44,26 +44,24 @@ const callSendMessage = async (url, senderId, query) => {
 router.post('/', async (req, res) => {
   try {
     let body = req.body;
-    
-    // Sprawdzamy, czy zapytanie ma odpowiednią strukturę
+
+    console.log("Otrzymano zapytanie POST:", body); // Zaloguj całe zapytanie
+
     if (!body.entry || !body.entry[0].messaging || !body.entry[0].messaging[0]) {
-      return res.status(400).send('Invalid payload');
+      return res.status(400).send('Invalid payload'); // Zwróć błąd, jeśli nie ma wymaganych danych
     }
 
-    // Pobieramy dane z ciała zapytania
     let senderId = body.entry[0].messaging[0].sender.id;
     let query = body.entry[0].messaging[0].message.text;
 
-    // Przygotowujemy adres URL do wysyłania wiadomości
+    console.log(`Otrzymano wiadomość: ${query} od użytkownika: ${senderId}`);
+
     const host = req.hostname;
     let requestUrl = `https://${host}/sendMessage`;
-
-    // Wywołujemy funkcję wysyłania wiadomości
     await callSendMessage(requestUrl, senderId, query);
 
-    console.log(senderId, query);  // Logowanie odbiorcy i zapytania
-
     res.status(200).send('OK');  // Potwierdzenie odbioru
+
   } catch (error) {
     console.error('Error in processing webhook:', error);
     res.status(500).send('Internal server error');  // Obsługa błędów
