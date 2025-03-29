@@ -4,7 +4,8 @@ require('dotenv').config();
 const axios = require("axios").default;
 
 // Endpoint weryfikacji (GET)
-router.get('/webhook', (req, res) => {
+// Endpoint weryfikacji (GET)
+router.get('/', (req, res) => {  // <- Zmieniłem '/webhook' na '/'
   let mode = req.query['hub.mode'];
   let token = req.query['hub.verify_token'];
   let challenge = req.query['hub.challenge'];
