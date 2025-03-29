@@ -1,6 +1,6 @@
 const express = require('express');
 require('dotenv').config({ path: './.env' });
-console.log(process.env.OPENAI_API_KEY); 
+console.log('VERIFY_TOKEN:', process.env.VERIFY_TOKEN); 
 
 const webApp = express();
 
