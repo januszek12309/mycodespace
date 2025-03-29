@@ -1,9 +1,12 @@
 const express = require('express');
-require('dotenv').config({ path: './.env' });
+console.log('Before dotenv loading');
+require('dotenv').config({ path: __dirname + '/.env' });
+console.log('After dotenv loading');
 console.log('VERIFY_TOKEN:', process.env.VERIFY_TOKEN); 
+console.log('OPENAI_API_KEY:', process.env.OPENAI_API_KEY); 
 
 const cors = require('cors');
-const webApp = express();  // Zadeklaruj webApp tutaj przed użyciem
+const webApp = express();  // Inicjalizacja webApp po załadowaniu cors
 
 // Użyj cors po zadeklarowaniu webApp
 webApp.use(cors());
