@@ -4,12 +4,12 @@ require('dotenv').config();
 const axios = require("axios").default;
 
 // Endpoint weryfikacji (GET)
-router.post('/webhook', (req, res) => {
+router.get('/webhook', (req, res) => {
   let mode = req.query['hub.mode'];
   let token = req.query['hub.verify_token'];
   let challenge = req.query['hub.challenge'];
 
-  console.log('Received POST request:', { mode, token, challenge });
+  console.log('Received GET request:', { mode, token, challenge });
 
   if (mode && token) {
     if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {

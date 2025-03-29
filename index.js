@@ -1,7 +1,8 @@
 const express = require('express');
 require('dotenv').config({ path: './.env' });
 console.log('VERIFY_TOKEN:', process.env.VERIFY_TOKEN); 
-
+const cors = require('cors');
+webApp.use(cors());
 const webApp = express();
 
 const PORT = process.env.PORT || 5000;
