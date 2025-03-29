@@ -9,7 +9,7 @@ router.get('/webhook', (req, res) => {
   let token = req.query['hub.verify_token'];
   let challenge = req.query['hub.challenge'];
 
-  console.log('Received GET request:', { mode, token, challenge });  // Zaloguj zapytanie
+  console.log('Received GET request:', { mode, token, challenge });
 
   if (mode && token) {
     if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
