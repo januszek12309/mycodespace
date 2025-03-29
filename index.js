@@ -1,9 +1,11 @@
 const express = require('express');
-require('dotenv').config();
+require('dotenv').config({ path: './.env' });
+console.log(process.env.OPENAI_API_KEY); 
 
 const webApp = express();
 
 const PORT = process.env.PORT || 5000;
+
 
 // Logowanie zapytań
 webApp.use((req, res, next) => {
