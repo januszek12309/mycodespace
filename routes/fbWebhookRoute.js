@@ -1,15 +1,13 @@
-// fbWebhookRoute.js
-
 const express = require('express');
 const router = express.Router();
 require('dotenv').config();
 const axios = require("axios").default;
 
 // Endpoint weryfikacji (GET)
-router.get('/', (req, res) => {
-  const mode = req.query['hub.mode'];
-  const token = req.query['hub.verify_token'];
-  const challenge = req.query['hub.challenge'];
+router.get('/webhook', (req, res) => {
+  let mode = req.query['hub.mode'];
+  let token = req.query['hub.verify_token'];
+  let challenge = req.query['hub.challenge'];
 
   console.log('Received GET request:', { mode, token, challenge });
 

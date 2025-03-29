@@ -5,6 +5,12 @@ const webApp = express();
 
 const PORT = process.env.PORT || 5000;
 
+// Logowanie zapytań
+webApp.use((req, res, next) => {
+  console.log(`Received ${req.method} request at ${req.path}`);
+  next();
+});
+
 webApp.use(express.urlencoded({ extended: true }));
 webApp.use(express.json());
 
