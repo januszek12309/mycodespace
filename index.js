@@ -22,9 +22,10 @@ const fbWebhookRoute = require('./routes/fbWebhookRoute');
 const sendMessageRoute = require('./routes/sendMessageRoute');
 
 // Ustawiasz trasy
+// Ustawiasz trasy
 webApp.use('/webhook', fbWebhookRoute.router); // Endpoint do webhooka
 webApp.use('/', homeRoute.router);              // Strona główna
-webApp.use('/sendMessage', sendMessageRoute.router); // Endpoint do wysyłania wiadomości
+webApp.use('/sendMessage', sendMessageRoute.router); // Endpoint do wysyłania wiadomości// Endpoint do wysyłania wiadomości
 
 // Uruchamiasz serwer
 webApp.listen(PORT, () => {
