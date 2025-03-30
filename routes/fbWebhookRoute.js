@@ -45,8 +45,8 @@ const callSendMessage = async (url, senderId, query) => {
 }
 
 // Endpoint do przetwarzania powiadomień (POST)
-router.post('/', async (req, res) => {
-  console.log('📥 Otrzymano żądanie POST:', JSON.stringify(req.body, null, 2)); // Loguje pełne body
+router.post('/', (req, res) => {
+  console.log('📥 Otrzymano żądanie POST:', req.body); // Loguje pełne body
 
   try {
     let body = req.body;
@@ -56,23 +56,15 @@ router.post('/', async (req, res) => {
       return res.status(400).send('Invalid payload'); 
     }
 
+    // Przetwarzanie wiadomości
     let senderId = body.entry[0].messaging[0].sender.id;
     let query = body.entry[0].messaging[0].message.text;
 
     console.log(`📨 Wiadomość od: ${senderId}, Treść: "${query}"`);
-
-    const host = req.hostname;
-    let requestUrl = `https://${host}/sendMessage`;
-
-    console.log(`🔗 Wysyłam zapytanie do: ${requestUrl}`);
-
-    await callSendMessage(requestUrl, senderId, query);
-
-    res.status(200).send('OK'); 
-
+    res.status(200).send('OK');
   } catch (error) {
     console.error('❌ Błąd podczas przetwarzania webhooka:', error);
-    res.status(500).send('Internal server error'); 
+    res.status(500).send('Internal server error');
   }
 });
 

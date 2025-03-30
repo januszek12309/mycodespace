@@ -6,7 +6,10 @@ const cors = require('cors');
 const fbWebhookRoute = require('./routes/fbWebhookRoute');  // Import webhooka
 
 const webApp = express();
-webApp.use(cors());  // Używanie CORS (dopuszcza połączenia z innych domen)
+webApp.use(cors({
+  origin: '*',  // Zezwól na połączenia z każdej domeny (możesz ograniczyć, jeśli potrzebujesz)
+  methods: ['GET', 'POST'],
+}));
 
 const PORT = process.env.PORT || 8080;  // Użyj portu z env lub 8080 jako domyślny
 
