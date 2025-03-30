@@ -6,8 +6,8 @@ const axios = require("axios").default;
 // Endpoint weryfikacji (GET)
 // Endpoint weryfikacji (GET)
 router.get('/', (req, res) => {
-  console.log('Pełny URL:', req.originalUrl);  // Logowanie pełnego URL
-  console.log('📥 Otrzymano żądanie GET:', req.query);  // Logowanie zapytania
+  console.log('📥 Otrzymano żądanie GET:', req.query); // Logowanie zapytania
+  console.log(`Full URL: ${req.originalUrl}`); // Pełny URL zapytania
 
   let mode = req.query['hub.mode'];
   let token = req.query['hub.verify_token'];
