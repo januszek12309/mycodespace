@@ -29,6 +29,11 @@ webApp.use('/webhook', fbWebhookRoute.router);  // Endpoint do webhooka
 webApp.use('/', homeRoute.router);              // Strona główna
 webApp.use('/sendMessage', sendMessageRoute.router); // Endpoint do wysyłania wiadomości
 
+// Endpoint zdrowia (health check)
+webApp.get('/health', (req, res) => {
+  res.status(200).send('OK');  // Odpowiada OK, gdy aplikacja działa prawidłowo
+});
+
 // Uruchamiasz serwer
 webApp.listen(PORT, () => {
   console.log(`Server is up and running at http://localhost:${PORT}`);  // Uruchomienie serwera
