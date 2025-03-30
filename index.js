@@ -1,5 +1,6 @@
 const express = require('express');
 require('dotenv').config({ path: './.env' });
+console.log('VERIFY_TOKEN:', process.env.VERIFY_TOKEN);
 const cors = require('cors');
 const fbWebhookRoute = require('./routes/fbWebhookRoute'); // Importujesz tylko raz
 
