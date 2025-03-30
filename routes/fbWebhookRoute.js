@@ -14,18 +14,18 @@ router.get('/', (req, res) => {
 
   console.log(`🔹 mode: ${mode}, token: ${token}, challenge: ${challenge}`);
 
-  if (mode && token) {
-    if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
-      console.log('✅ WEBHOOK_VERIFIED');
-      res.status(200).send(challenge);  // Odpowiedź na wyzwanie
-    } else {
-      console.log(`❌ Invalid token or mode - otrzymano token: ${token}, a oczekiwano: ${process.env.VERIFY_TOKEN}`);
-      res.sendStatus(403);  // Jeśli token lub tryb są nieprawidłowe
-    }
+if (mode && token) {
+  if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
+    console.log('✅ WEBHOOK_VERIFIED');
+    res.status(200).send(challenge);  // Odpowiedź na wyzwanie
   } else {
-    console.log('⚠️ Missing parameters');
-    res.sendStatus(400);  // Brak wymaganych parametrów
+    console.log(`❌ Invalid token or mode - otrzymano token: ${token}, a oczekiwano: ${process.env.VERIFY_TOKEN}`);
+    res.sendStatus(403);  // Jeśli token lub tryb są nieprawidłowe
   }
+} else {
+  console.log('⚠️ Missing parameters');
+  res.sendStatus(400);  // Brak wymaganych parametrów
+}
 });
 
 // Funkcja do wysyłania wiadomości
