@@ -6,7 +6,8 @@ const axios = require("axios").default;
 // Endpoint weryfikacji (GET)
 // Endpoint weryfikacji (GET)
 router.get('/', (req, res) => {
-  console.log('📥 Otrzymano żądanie GET:', req.query); // Loguj całą zawartość zapytania
+  console.log('Pełny URL:', req.originalUrl);  // Logowanie pełnego URL
+  console.log('📥 Otrzymano żądanie GET:', req.query);  // Logowanie zapytania
 
   let mode = req.query['hub.mode'];
   let token = req.query['hub.verify_token'];
@@ -14,18 +15,18 @@ router.get('/', (req, res) => {
 
   console.log(`🔹 mode: ${mode}, token: ${token}, challenge: ${challenge}`);
 
-if (mode && token) {
-  if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
-    console.log('✅ WEBHOOK_VERIFIED');
-    res.status(200).send(challenge);  // Odpowiedź na wyzwanie
+  if (mode && token) {
+    if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
+      console.log('✅ WEBHOOK_VERIFIED');
+      res.status(200).send(challenge);  // Odpowiedź na wyzwanie
+    } else {
+      console.log(`❌ Invalid token or mode - otrzymano token: ${token}, a oczekiwano: ${process.env.VERIFY_TOKEN}`);
+      res.sendStatus(403);  // Jeśli token lub tryb są nieprawidłowe
+    }
   } else {
-    console.log(`❌ Invalid token or mode - otrzymano token: ${token}, a oczekiwano: ${process.env.VERIFY_TOKEN}`);
-    res.sendStatus(403);  // Jeśli token lub tryb są nieprawidłowe
+    console.log('⚠️ Missing parameters');
+    res.sendStatus(400);  // Brak wymaganych parametrów
   }
-} else {
-  console.log('⚠️ Missing parameters');
-  res.sendStatus(400);  // Brak wymaganych parametrów
-}
 });
 
 // Funkcja do wysyłania wiadomości
